@@ -27,7 +27,7 @@ let chatOpen = false
 const ChatList = () => {
     return ( <div id="chatList">
         {chats.map(function(object, i){
-        return <Link key={i} to={'chat/'+i}><div className="messageBox" onClick={openChat}> 
+        return <Link key={i} to={""+i}><div className="messageBox" onClick={openChat}> 
             <div className="avatar"></div>
             <div className="messageBoxText"><div>{object.name}</div>
             <div className="lastMessage">

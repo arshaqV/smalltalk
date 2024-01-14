@@ -11,10 +11,7 @@ function App() {
       </div>
       <div id="headerLine"></div>
       <LoginBox />
-      <div id="mainContainer">
-       <ChatList />
-       <Outlet />
-      </div>
+      <Outlet />
     </>
   )
 }

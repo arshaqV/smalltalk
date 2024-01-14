@@ -8,6 +8,7 @@ import {
 import './index.css'
 import ErrorPage from './routes/error.jsx';
 import ChatView from './routes/chat.jsx';
+import MainContainer from './components/MainContainer.jsx';
 
 
 const router = createBrowserRouter([
@@ -17,8 +18,14 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "chat/:chatID",
-        element: <ChatView />
+        path: "chat/",
+        element: <MainContainer />,
+        children: [
+          {
+            path: ":chatid/",
+            element: <ChatView />,
+          }
+        ]
       },
     ],
   }
