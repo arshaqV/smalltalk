@@ -144,6 +144,7 @@ input {
 
 #mainContainer {
   display: flex;
+  position: absolute;
   visibility: hidden;
   opacity: 0;
   transition: all 0.2s;
