@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 import ChatList from "./ChatList";
+import BottomMenu from "./BottomMenu";
 import { Outlet } from "react-router-dom";
 
 const MainContainer = () => {
     useEffect(onCreateAnimation)
     return ( <div id="mainContainer">
+        <div id="side">
     <ChatList />
+    <BottomMenu />
+    </div>
     <Outlet />
    </div> );
 }
