@@ -1,32 +1,16 @@
 import { useEffect } from "react";
 import ChatList from "./ChatList";
 import BottomMenu from "./BottomMenu";
-import { Outlet, redirect, useLoaderData } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { getConversations } from "../actions/firebaseFunctions";
 import { auth } from "../firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 
-export async function loader() {
-    onAuthStateChanged(auth,(user)=>
-    {
-        if(user) {
-            console.log(user.uid)
-
-        }
-        else {
-            console.log("No user ID found")
-        }
-    })
-  const conversations = await getConversations()
-    return { conversations }; 
-}
-
 const MainContainer = () => {
     useEffect(onCreateAnimation)
-    const {conversations} = useLoaderData();
     return ( <div id="mainContainer">
         <div id="side">
-    <ChatList conversations={conversations}/>
+    <ChatList />
     <BottomMenu />
     </div>
     <Outlet />

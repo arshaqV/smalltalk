@@ -3,7 +3,7 @@ import { isCorrectUser, sendMessage } from "../actions/firebaseFunctions";
 import ChatHeader from "./ChatHeader";
 import { useEffect, useState } from "react";
 import { IoSend } from "react-icons/io5";
-import { query,ref,onValue,limitToLast } from "firebase/database";
+import { query,ref,onValue,limitToLast, onDisconnect } from "firebase/database";
 import { database } from "../actions/firebaseFunctions";
 import { auth } from "../firebaseConfig";
 import { getMetadata } from "../actions/firebaseFunctions";
@@ -26,6 +26,8 @@ const ChatArea = ({ chatid }) => {
                 if(snapshot.exists) {
                     messages.length = 0
                     snapshot.forEach((childSnapshot) => {
+                        if(childSnapshot.key=="lastMessage")
+                            return
                         messages.push(
                             childSnapshot.val()
                         )

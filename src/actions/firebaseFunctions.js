@@ -8,6 +8,14 @@ export const database = getDatabase(app)
 const dbRef = ref(database);
 let conversationsList, usersList
 
+export function setUsersList(ul) {
+  usersList = ul
+}
+
+export function setConversationsList(cl) {
+  conversationsList = cl
+}
+
 let userID
     onAuthStateChanged(auth,(user)=>
     {
@@ -79,6 +87,8 @@ export async function signUp(userID, userName) {
 } 
 
 export async function addUser(userName) {
+  console.log(conversationsList)
+  console.log(usersList)
   if(userName === "")
     {
       console.log("Enter user name")
@@ -89,23 +99,24 @@ export async function addUser(userName) {
     if(usersList[user].username===userName)
     {
       for(let i = 0; i<conversationsList.length; i++)
-      {
-        if(conversationsList[i].users[user].exists) {
+      { console.log(conversationsList[i])
+        if(conversationsList[i].name===userName) {
           console.log("Conversation with user already exists")
           return
-      }}
-    const conversationRef = ref(database, 'conversation');
-    const newConversationRef = push(conversationRef);
-    set(newConversationRef, {
+        }
+      }
+      const conversationRef = ref(database, 'conversation');
+      const newConversationRef = push(conversationRef);
+      set(newConversationRef, {
         users: {
           [userID] : true,
           [user] : true
         }
-    });
-    return
+      });
+      return
     }
-    console.log("User not found")
-  }
+  console.log("User not found")
+}
 
   export async function sendMessage(conversationID, messageText)
   {
@@ -116,7 +127,7 @@ export async function addUser(userName) {
       return
     }
     const messagesRef = ref(database, 'messages/'+conversationID);
-    const lastMessageRef = ref(database, 'conversation/'+conversationID+'/lastMessage/')
+    const lastMessageRef = ref(database, 'messages/'+conversationID+'/lastMessage/')
     const newMessageRef = push(messagesRef);
     set(newMessageRef, {
         from : userID,
