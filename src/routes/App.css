@@ -65,6 +65,12 @@ body {
   border-right: 0px;
   border-top: 0px;
   border-left: 0px;
+  transition: background-color 0.1s;
+}
+
+.messageBoxSelected {
+  color:#111;
+  background-color: #eee;
 }
 
 .messageBox:hover {
@@ -181,6 +187,15 @@ input {
   cursor: pointer;
 }
 
+.shade {
+  position: absolute;
+  bottom: 60px;
+  color: #111;
+  left: 0px;
+  width: 320px;
+  background-color: #eee;
+}
+
 .divider {
   height: 1px;
   width: 200px;
@@ -287,7 +302,8 @@ input {
   font-family: unset;
   margin: 0;
   border: 0;
-  width: calc(100vw - 380px);
+  width: 80%;
+  margin-left: 5px;
   height: 40px;
   border-radius: 0;
   background-color: #111;
@@ -307,4 +323,36 @@ input {
 #sendButtonIcon {
   height: 32px;
   width: 32px;
+}
+
+@media (max-width: 600px) {
+  #mainContainer {
+    flex-direction: column;
+  }
+  #chatList {
+    width: 100vw;
+  }
+  .messageBox {
+    width: 100vw;
+  }
+  #bottomMenu {
+    width: 100vw;
+  }
+  .chatArea {
+    position: absolute;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    z-index: 10;
+  }
+  .chatHeader {
+    width: 100vw;
+  }
+  .chatMessages {
+    width: 100vw;
+  }
+  .chatInput {
+    width: 100vw;
+  }
+  
 }

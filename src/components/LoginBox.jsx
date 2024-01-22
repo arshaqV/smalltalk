@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebaseConfig';
+import { signUp } from '../actions/firebaseFunctions';
 
 const root = document.getElementById("root")
 root.className = "loginClass"
@@ -27,18 +28,20 @@ const LoginBox = () => {
     };
 
     const handleSignUp = () => {
-      const auth = getAuth();
-      const email = document.getElementById("username").value+"@noreply.smalltalk.io"
+      const username = document.getElementById("username").value
+      const email = username+"@noreply.smalltalk.io"
         console.log(email)
         const password = document.getElementById("password").value
         createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
+
     // Signed up 
     const user = userCredential.user;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
+        const user = auth.currentUser;
+        signUp(user.uid, username)
         navigate("/chat")
       })
       .catch((error) => {

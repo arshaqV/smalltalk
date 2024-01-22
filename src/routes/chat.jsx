@@ -1,9 +1,9 @@
 import ChatArea from "../components/ChatArea";
-import ChatList from "../components/ChatList";
-
+import { useParams } from "react-router-dom";
 const ChatView = () => {
+  const { chatid } = useParams()
     return ( <div id="chatView">
-    <ChatArea />
+    <ChatArea chatid={chatid} />
     </div> );
 }
  

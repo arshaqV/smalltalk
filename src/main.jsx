@@ -8,8 +8,7 @@ import {
 import './index.css'
 import ErrorPage from './routes/error.jsx';
 import ChatView from './routes/chat.jsx';
-import MainContainer from './components/MainContainer.jsx';
-
+import MainContainer, { loader as ListLoader} from './components/MainContainer.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +19,7 @@ const router = createBrowserRouter([
       {
         path: "chat/",
         element: <MainContainer />,
+        loader: ListLoader,
         children: [
           {
             path: ":chatid/",
