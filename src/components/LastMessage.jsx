@@ -3,14 +3,15 @@ import { database } from "../actions/firebaseFunctions";
 import { onValue,ref } from "firebase/database";
 
 
-const LastMessage = ({ chatid }) => {
-    const [message,setMessage] = useState({text:"",time:""})
+const LastMessage = ({ lastMessage, chatid }) => {
+    const [message, setMessage] = useState({time:"",text:""})
     const [timeString, setTimeString] = useState("");
     
 
     useEffect(()=>{
+        setMessage(lastMessage)
         const calculateTime = () => {
-            const time = message.time
+            const time = lastMessage.time || ""
             if(time==="" || time===undefined)
                 return "-"
             const serverDate = new Date(time);
@@ -37,23 +38,17 @@ const LastMessage = ({ chatid }) => {
             }
             setTimeString(timeString)
         }
-
-        const messageRef = ref(database,"messages/"+chatid+"/lastMessage")
-        onValue(messageRef,(obj)=>{
-            console.log(obj.val())
-            if(obj.val()!=null) {
-                setMessage(obj.val())
-            }
-        }) 
+        
+        
         calculateTime()
         const intervalID = setInterval(calculateTime,60000)
         return () => clearInterval(intervalID)
-    },[chatid, message.time])
+    },[lastMessage])
 
     return ( 
         <div className="lastMessage">
-        <div>{message.text} </div>
-                <div className="lastMessageTime">{timeString}</div>
+        {message && (<div>{message.text} </div>)}
+                {message && <div className="lastMessageTime">{timeString}</div>}
                 </div>
      );
 }

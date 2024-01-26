@@ -10,8 +10,9 @@ import LastMessage from "./LastMessage";
 let chatOpen = false
 const ChatList = () => {
     const navigate = useNavigate();
-    const [activeChat, setActiveChat] = useState(null)
     const [conversations, setConversations] = useState([])
+    const [lastMessages, setLastMessages] = useState({})
+    const [sortedConversations, setSortedConversations] = useState([])
 
     const currentPath = window.location.pathname;
 
@@ -75,17 +76,49 @@ const ChatList = () => {
                 };
                 conversations.push(conversation);
             }
+            setConversationsList(conversations)
+            setConversations([...conversations])
         })
-        setConversationsList(conversations)
-        setConversations([...conversations])
+        
+        
     })},[])
+    useEffect(()=>{
+        conversations.forEach((conversation)=>{
+            const messageRef = ref(database,"messages/"+conversation.id+"/lastMessage")
+            onValue(messageRef,(obj)=>{
+                console.log("Here is the lastMessage of " + conversation.name)
+                console.log(obj.val())
+                const x = obj.val()
+                if(x!=null) {
+                    setLastMessages((prev)=>({...prev,[conversation.id]:x}))
+                }
+        })}) 
+    },[conversations])
+
+    useEffect(()=>{
+        const sortedConversations = conversations.slice().sort((a, b) => {
+            const lastMessageA = lastMessages[a.id];
+            const lastMessageB = lastMessages[b.id];
+            console.log({lastMessageA})
+            
+            if (!lastMessageA || !lastMessageA.time) return 1;
+            if (!lastMessageB || !lastMessageB.time) return -1;
+            
+            return lastMessageB.time - lastMessageA.time;
+          });
+      
+          console.log({sortedConversations})
+          setSortedConversations(sortedConversations);
+    },[conversations,lastMessages])
+
     console.log(chatID)
+    console.log({lastMessages})
     return ( <div id="chatList">
-        {conversations.map(function(object, i){
+        {sortedConversations.map(function(object, i){
         return <div key={i} className={(chatID===object.id) ? "messageBox messageBoxSelected" : "messageBox"} onClick={()=>openChat(object.id)}> 
             <div className="avatar"></div>
             <div className="messageBoxText"><div>{object.name}</div>
-            <LastMessage chatid={object.id}/>
+            {lastMessages[object.id] && <LastMessage lastMessage={lastMessages[object.id]} chatid={object.id}/>}
             </div>
             </div>
             ;
