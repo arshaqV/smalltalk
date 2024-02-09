@@ -14,7 +14,6 @@ import Index from './routes/index.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
-    basename:"/smalltalk/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
@@ -31,7 +30,7 @@ const router = createBrowserRouter([
       },
     ],
   }
-]);
+], {basename:"/smalltalk/",});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
