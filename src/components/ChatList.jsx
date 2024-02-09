@@ -5,15 +5,24 @@ import { ref, onValue } from "firebase/database";
 import { setUsersList } from "../actions/firebaseFunctions";
 import { setConversationsList } from "../actions/firebaseFunctions";
 import { auth } from "../firebaseConfig";
+import { IoArrowBack } from "react-icons/io5";
 import LastMessage from "./LastMessage";
+import Avatar from "./Avatar";
+import { onAuthStateChanged } from "firebase/auth";
+import CAT from "../assets/CAT.png"
+import PINGU from "../assets/PINGU.png"
+import COOL from "../assets/COOL.png"
+import KOALA from "../assets/KOALA.png"
+import PANDA from "../assets/PANDA.png"
 
-let chatOpen = false
 const ChatList = () => {
+    const [chatOpen, setChatOpen] = useState(false)
+    const [uid, setUid] = useState("")
     const navigate = useNavigate();
     const [conversations, setConversations] = useState([])
     const [lastMessages, setLastMessages] = useState({})
     const [sortedConversations, setSortedConversations] = useState([])
-
+    const avatarImages = [PINGU, CAT, KOALA, PANDA]
     const currentPath = window.location.pathname;
 
     // Extract the last part of the path
@@ -21,8 +30,10 @@ const ChatList = () => {
 
     const openChat = function(id) {
         if(!chatOpen) {
-            chatOpen=true
+            
+            setChatOpen(true)
             const logo = document.getElementById("smalltalk")
+            logo.className = "logoChatOpen"
             logo.style.top = "-80px"
             logo.style.opacity = "0"
             let header;
@@ -43,7 +54,15 @@ const ChatList = () => {
     }
 
     useEffect(()=>{
-        const userID = auth.currentUser.uid
+        onAuthStateChanged(auth, (user)=>{
+            if(user) {
+                setUid(user.uid)
+            }
+        })
+    })
+
+    useEffect(()=>{
+        const userID = uid
         console.log("Rendering chat list")
         const conversationRef = ref(database,"conversation")
         const userRef = ref(database,"user")
@@ -67,10 +86,13 @@ const ChatList = () => {
                 const participantIds = Object.keys(users);
                 const otherParticipantId = participantIds.find(id => id !== userID);
                 const otherParticipantUsername = userSnapshotCopy.child(`${otherParticipantId}/username`).val();
+                const otherParticipantAvatar = userSnapshotCopy.child(`${otherParticipantId}/avatar`).val() || "000";
                 const conversation = {
                     users: users,
                     id: conversationId,
+                    otherUserID: otherParticipantId,
                     name: otherParticipantUsername,
+                    avatar: otherParticipantAvatar,
                     // You may add logic to get the lastMessage here
                     lastMessage: "Sample Last Message", // Replace with your logic to get the last message
                 };
@@ -79,9 +101,7 @@ const ChatList = () => {
             setConversationsList(conversations)
             setConversations([...conversations])
         })
-        
-        
-    })},[])
+    })},[uid])
     useEffect(()=>{
         conversations.forEach((conversation)=>{
             const messageRef = ref(database,"messages/"+conversation.id+"/lastMessage")
@@ -89,7 +109,10 @@ const ChatList = () => {
                 console.log("Here is the lastMessage of " + conversation.name)
                 console.log(obj.val())
                 const x = obj.val()
+
                 if(x!=null) {
+                    if(x.from!==conversation.otherUserID)
+                        x.from = "other"
                     setLastMessages((prev)=>({...prev,[conversation.id]:x}))
                 }
         })}) 
@@ -111,18 +134,29 @@ const ChatList = () => {
           setSortedConversations(sortedConversations);
     },[conversations,lastMessages])
 
+    const back = () => {
+        const logo = document.getElementById("smalltalk")
+        logo.style.transition = "all 0s"
+        logo.style.left = "50%"
+        logo.className = ""
+        setChatOpen(false)
+        navigate("/chat")
+    }
+
     console.log(chatID)
     console.log({lastMessages})
     return ( <div id="chatList">
+        {chatOpen && <IoArrowBack id="backButton" onClick={back}/>}
         {sortedConversations.map(function(object, i){
         return <div key={i} className={(chatID===object.id) ? "messageBox messageBoxSelected" : "messageBox"} onClick={()=>openChat(object.id)}> 
-            <div className="avatar"></div>
+            <Avatar code={object.avatar} avatarImage={avatarImages[object.avatar[0]]} cool={COOL}/>
             <div className="messageBoxText"><div>{object.name}</div>
             {lastMessages[object.id] && <LastMessage lastMessage={lastMessages[object.id]} chatid={object.id}/>}
             </div>
             </div>
             ;
     })}
+    
     </div> );
 }
 

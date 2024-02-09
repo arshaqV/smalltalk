@@ -7,14 +7,25 @@ import { query,ref,onValue,limitToLast, onDisconnect } from "firebase/database";
 import { database } from "../actions/firebaseFunctions";
 import { auth } from "../firebaseConfig";
 import { getMetadata } from "../actions/firebaseFunctions";
+import CAT from "../assets/CAT.png"
+import PINGU from "../assets/PINGU.png"
+import COOL from "../assets/COOL.png"
+import KOALA from "../assets/KOALA.png"
+import PANDA from "../assets/PANDA.png"
+
+const colors = ["#eeeeee","#04724d","#fa8334","#b6244f","#648de5"]
+const avatarImages = [PINGU, CAT, KOALA, PANDA]
 
 const ChatArea = ({ chatid }) => {
     const [data, setData] = useState([])
-    const userID = auth.currentUser.uid
+    const userID = auth?.currentUser?.uid || ""
     const navigate = useNavigate()
     const [metadata, setMetadata] = useState({})
     
     useEffect(()=>{
+        if(userID=="")
+            {navigate("/chat/")}
+        else {
         if(isCorrectUser(chatid)) {
             console.log("Rendering chat area")
             const md = getMetadata(chatid)
@@ -39,7 +50,7 @@ const ChatArea = ({ chatid }) => {
             }) 
         } else {
             navigate("/chat")
-        }}, [chatid])
+        }}}, [chatid])
 
     function sendMessageAction() {
         const text = document.getElementById("chatTextInput").value
@@ -47,9 +58,15 @@ const ChatArea = ({ chatid }) => {
         document.getElementById("chatTextInput").value = ""
     }
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          sendMessageAction();
+        }
+      };
+
     return ( <div className="chatArea">
         <div id="chatHeaderId" className="chatHeader">
-            <ChatHeader metadata={metadata}/>
+            <ChatHeader metadata={metadata} avatarImages={avatarImages} cool={COOL}/>
         </div>
         <div className="chatMessages">
             {data.map((object, i)=>{
@@ -60,10 +77,12 @@ const ChatArea = ({ chatid }) => {
             })}
         </div>
         <div id="chatInputId" className="chatInput">
-            <input id="chatTextInput" type="text" placeholder="Type message here..."></input>
+           <input id="chatTextInput" type="text" placeholder="Type message here..." onKeyDown={handleKeyPress}></input>
             <div id="sendButton" onClick={sendMessageAction}><IoSend id="sendButtonIcon"/></div>
         </div>
     </div> );
 }
  
+
+
 export default ChatArea;

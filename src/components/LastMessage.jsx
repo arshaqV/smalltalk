@@ -3,7 +3,7 @@ import { database } from "../actions/firebaseFunctions";
 import { onValue,ref } from "firebase/database";
 
 
-const LastMessage = ({ lastMessage, chatid }) => {
+const LastMessage = ({ lastMessage, userid }) => {
     const [message, setMessage] = useState({time:"",text:""})
     const [timeString, setTimeString] = useState("");
     
@@ -47,7 +47,8 @@ const LastMessage = ({ lastMessage, chatid }) => {
 
     return ( 
         <div className="lastMessage">
-        {message && (<div>{message.text} </div>)}
+            
+        {message && (<div className="lastMessageText">{(message.from==="other") ? "You: " : "" }{message.text} </div>)}
                 {message && <div className="lastMessageTime">{timeString}</div>}
                 </div>
      );

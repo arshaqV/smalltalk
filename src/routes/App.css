@@ -24,15 +24,35 @@ body {
   border-radius: 5px;
 }
 
+#splash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vh;
+  background-color: #111;
+  z-index: 1000;
+}
+
 #smalltalk {
   font-family: 'Space Mono', monospace;
   font-size: x-large; 
   transition: all 0.2s;
   position: relative;
-  z-index: 3;
+  visibility: hidden;
   top: 0;
   left: 50%;
   transform: translateX(-50%); /* Adjust for horizontal centering */
+}
+
+#loginLogo {
+  font-family: 'Space Mono', monospace;
+  font-size: x-large; 
+  transition: all 0.3s ease-out;
+  position: relative;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #chatList {
@@ -45,19 +65,42 @@ body {
 }
 
 #backButton {
+  transition: opacity 0.2s;
+  opacity: 0;
+  visibility: hidden;
   height: 32px;
   width: 32px;
-  color: #111;
+  color: #eee;
   margin-right: 10px;
   padding: 0;
   margin-left: 0;
   position: absolute;
-  top: -100px;
+  top: 0px;
+}
+
+#indexPage {
+  position: absolute;
+  top:80px;
+  border-left: 1px solid #eee;
+  height: calc(100vh - 140px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100vw - 320px);
+}
+
+.indexText {
+  position: relative;
+  top:30px;
+
+  opacity: 15%;
+  width: 100%;
+  flex-grow: 1;
+  text-align: center;
 }
 
 #side {
   margin-top: 80px;
-  z-index: 0;
   margin-top: 80px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -79,8 +122,7 @@ body {
 }
 
 .messageBoxSelected {
-  color:#111;
-  background-color: #eee;
+  background-image: linear-gradient(to left, #eee 3%, rgba(0,0,0,0) 3%); 
 }
 
 .messageBox:hover {
@@ -93,15 +135,24 @@ body {
   flex-grow: 1;
   text-align: left;
   width: auto;
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 .lastMessage {
   font-weight:normal;
+  font-size: small;
   display: flex;
   justify-content: left;
   align-items: baseline;
 }
+
+.lastMessageText {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .lastMessageTime {
   margin-left: 5px;
@@ -114,20 +165,95 @@ body {
   margin-right: 20px;
   margin-left: 5px;
   background-color: #eee;
+  position: relative;
   color: #111;
   height: 48px;
   width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.avatarImage {
+  filter: drop-shadow(4px 4px 0.01rem #111); 
+  position: relative;
+  height: 40px;
+  width: 40px;
+}
 
+.cool {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+}
+
+#settingsHeader {
+  background-color: #222;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0;
+}
+
+#settingsAvatar {
+  justify-self: start;
+  margin-left: 10px;
+  margin-right: 0px;
+  padding-right: 0px;
+  width: fit-content;
+  display: flex;
+}
+
+#settingsName {
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+#logOutButton {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  justify-self: end;
+  flex-grow: 0;
+  margin-right: 10px;
+  display: flex;
+}
+
+#logOutButton:hover {
+  cursor: pointer;
+}
+
+#settingsShade {
+  margin: 0;
+  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.loggedOutLogo {
+  transition: all 0s;
+  visibility: hidden;
+}
+
+#signUp {
+  text-decoration: underline;
+  color: #eee;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
+}
+
+#signUp:hover {
+  color: #28a55c;
+  transform: scale(1.1);
+}
 
 #headerLine {
   height: 1px;
   position: absolute;
-  transition: all 0.4s ease-in;
-  transition-delay: 0.2s;
-  width: 1px;
-  opacity: 0;
+  width: 100vw;
+  opacity: 0%;
   left:0;
   right: 0;
   top:80px;
@@ -138,22 +264,47 @@ body {
   z-index: 10;
 }
 
+@keyframes linein {
+  from {
+    width: 1px;
+    opacity: 0;
+  }
+  to {
+    width: 100vw;
+    opacity: 100%;
+  }
+}
+
 #loginForm {
+  border-radius: 10px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  margin-top: 1rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
+  height: 0px;
+  opacity: 0;
+  animation: loginUp 0.5s ease-in-out 0.7s forwards;
   transition: all 0.2s ease-in;
+}
+
+@keyframes loginUp {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+  to {
+    height: 230px;
+    opacity: 100%;
+  }
 }
 
 input {
   background-color: black;
   margin: 5px;
-  height: 30px;
   text-indent: 5px;
   border-radius: 5px;
   font-family: 'Space Mono';
@@ -166,12 +317,12 @@ input {
   border-right: 1px solid #eee;
   display: flex;
   justify-content: space-around;
-  z-index: 5;
+  z-index: 99;
   align-items: center;
   height: 60px;
   width: 320px;
   color: #111;
-  box-shadow: 10px -10px 10px rgba(1, 1, 1, 0.5);
+  box-shadow: 0px -10px 15px rgba(1, 1, 1, 0.5);
 }
 
 .bottomMenuButton {
@@ -181,7 +332,13 @@ input {
   display: flex;
   justify-content: center;
   transition: all 0.1s;
+  z-index: 99;
+  background-color: #111;
   color: #eee;
+}
+
+.bottomMenuButton:last-child {
+  border-right: unset;
 }
 
 .bottomMenuButtonIcon {
@@ -200,10 +357,36 @@ input {
 .shade {
   position: absolute;
   bottom: 60px;
-  color: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #111;
+  box-sizing: border-box;
+  color: #eee;
+  z-index: 0;
+  padding-bottom: 10px;
   left: 0px;
   width: 320px;
-  background-color: #eee;
+  border-top: 5px solid #333;
+  box-shadow: 0px -10px 15px rgba(1, 1, 1, 0.5);
+}
+
+#avatarForm {
+  width: 100%;
+}
+
+#addUserButton {
+  border-radius: 5px;
+  height:32px;
+  text-align: left;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#addUserText {
+  height: 32px;
 }
 
 .divider {
@@ -253,7 +436,7 @@ input {
   border-radius: 10px;
   margin-right: 20px;
   margin-left: 5px;
-  background-color: #111;
+  background-color:rgba(0,0,0,0);
   color: #111;
   height: 48px;
   width: 48px;
@@ -270,7 +453,6 @@ input {
   flex-direction: column-reverse;
   position: relative;
   overflow-y: auto;
-  z-index: 2;
   height: calc(100vh - 140px);
   width: calc(100vw - 320px);
   border-left: 1px solid #eee;
@@ -288,6 +470,10 @@ input {
   align-self: flex-start;
 }
 
+.message:last-child {
+  margin-top: 20px;
+}
+
 .messageSent {
   align-self: flex-end;
   background-color: #282828;
@@ -297,7 +483,7 @@ input {
   background-color: #111;
   width: calc(100vw - 320px);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 60px;
   box-sizing: border-box;
@@ -314,7 +500,7 @@ input {
   font-family: unset;
   margin: 0;
   border: 0;
-  width: 80%;
+  width: 85%;
   margin-left: 5px;
   height: 40px;
   border-radius: 0;
@@ -325,10 +511,10 @@ input {
 #sendButton {
   margin: 10px;
   margin-left: 15px;
-  margin-right: 15px;
+  margin-right: 20px;
   display: flex;
   flex-grow: 1;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
 }
 
@@ -337,12 +523,82 @@ input {
   width: 32px;
 }
 
+#errorMessage {
+  font-size: smaller;
+  color: rgb(218, 67, 67);
+}
+
+#avatarForm {
+  display: flex;
+  flex-direction: column;
+}   
+
+fieldset {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+
+#avatarUpdateButton {
+  font-weight: normal;
+  border-radius: 20px;
+  border: 0px;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  background-color: #222;
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+  margin-left: 5px;
+  border: solid 3px #111;
+  box-sizing: border-box;
+  border-radius: 10px;
+  transition: all 0.05s ease-out;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #eee;
+  border-radius: 10px;
+}
+
+
+
 @media (max-width: 600px) {
   #mainContainer {
     flex-direction: column;
   }
+
+  #headerLine {
+    min-width: 100vw;
+  }
+
+  .messageBoxSelected {
+    color:#eee;
+    background-color: #111;
+  }
+
+  #side {
+    position: relative;
+  }
   #chatList {
     width: 100vw;
+    position: relative;
   }
   .messageBox {
     width: 100vw;
@@ -352,28 +608,68 @@ input {
   }
 
   #smalltalk {
-    left:50%;
+    left:50% !important;
   }
 
   #backButton {
-    position: static;
+    opacity: 100%;
+    visibility: visible;
+    color: #111;
+    height: 32px;
+    width: 32px;
+    position: fixed;
+    top: 24px;
+    left: 10px;
+    z-index: 999;
+  }
+
+  #indexPage {
+    visibility: hidden;
+  }
+
+  .shade {
+    width: 100vw;
+    z-index: 0;
+    border-bottom: 1px solid #eee;
   }
 
   .chatArea {
     position: absolute;
-    width: 100vw;
-    left: 0;
+    width: calc(100vw + 1px);
+    left: 100vw;
     top: 0;
-    z-index: 10;
+    z-index: 100;
+    animation: slidein 0.3s ease-out alternate forwards;
+  }
+
+  @keyframes slidein {
+    to {
+      left: -1px;
+    }
   }
   .chatHeader {
     width: 100vw;
+    position: relative;
+    z-index: 0;
+  }
+
+  .chatHeaderContainer {
+    margin-left: 30px;
+    position: relative;
+    z-index: 0;
   }
   .chatMessages {
     width: 100vw;
+    position: relative;
+    z-index: 9999;
+    transition: all 0.2s;
   }
   .chatInput {
     width: 100vw;
+    z-index: 9999;
+  }
+  .logoChatOpen {
+    visibility: hidden;
   }
   
 }

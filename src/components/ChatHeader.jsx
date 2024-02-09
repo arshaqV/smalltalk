@@ -1,17 +1,13 @@
-import { IoArrowBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import Avatar from "./Avatar";
 
-const ChatHeader = ({ metadata }) => {
-    const navigate = useNavigate()
-    const back = () => {
-        navigate("/chat")
-    }
+const ChatHeader = ({ metadata, avatarImages, cool }) => {
+    console.log({metadata})
 
     return ( <div className="chatHeaderContainer">
-        <IoArrowBack id="backButton" onClick={back}/>
         <div className="headerAvatar" style={{
             backgroundColor:"#111",
         }}>
+            {metadata.avatar && <Avatar code={metadata.avatar} avatarImage={avatarImages[metadata.avatar[0]]} cool={cool}  /> }
         </div>
         <div className="headerName">{metadata.name}</div>
     </div> );
