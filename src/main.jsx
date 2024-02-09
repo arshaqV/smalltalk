@@ -13,7 +13,7 @@ import Index from './routes/index.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/smalltalk/",
+    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
