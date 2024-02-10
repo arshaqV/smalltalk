@@ -30,7 +30,6 @@ const ChatList = () => {
 
     const openChat = function(id) {
         if(!chatOpen) {
-            
             setChatOpen(true)
             const logo = document.getElementById("smalltalk")
             logo.className = "logoChatOpen"
@@ -136,7 +135,6 @@ const ChatList = () => {
 
     const back = () => {
         const logo = document.getElementById("smalltalk")
-        logo.style.transition = "all 0s"
         logo.style.left = "50%"
         logo.className = ""
         setChatOpen(false)

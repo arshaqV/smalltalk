@@ -79,7 +79,7 @@ const LoginBox = () => {
         setMode("Login")
     }
 
-    return ( <>
+    return ( <div id="loginDiv">
     <div id="loginLogo">smalltalk.</div>
     <div id="loginForm"> 
         <input type="text" id="username" placeholder="Username"></input>
@@ -92,7 +92,7 @@ const LoginBox = () => {
         : <div>Not new here? <span id="signUp" onClick={switchMode}>Login.</span></div>}
         
     </div>
-    </> );
+    </div> );
 }
 
 export default LoginBox;

@@ -14,7 +14,7 @@ import { onChildAdded, limitToLast, onValue } from "firebase/database"
 
 export const database = getDatabase(app)
 const dbRef = ref(database)
-let conversationsList, usersList
+let conversationsList, usersList, loggedIn
 
 export function setUsersList(ul) {
   usersList = ul
@@ -29,9 +29,11 @@ let userID
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log(user.uid)
+    loggedIn = true
     userID = user.uid
   } else {
     console.log("No user ID found inside getConversations()")
+    loggedIn = false
   }
 })
 
@@ -131,6 +133,7 @@ export async function addUser(userName) {
 }
 
 export async function sendMessage(conversationID, messageText) {
+  if (!loggedIn) return
   const userID = auth.currentUser.uid
   if (messageText == "") {
     console.log("Enter message")
@@ -157,6 +160,7 @@ export async function sendMessage(conversationID, messageText) {
 }
 
 export async function setAvatar(code, uid) {
+  if (!loggedIn) return
   const avatarRef = ref(database, "user/" + uid + "/avatar")
   set(avatarRef, code)
 }
