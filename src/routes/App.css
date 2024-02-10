@@ -101,7 +101,6 @@ body {
 
 #side {
   margin-top: 80px;
-  margin-top: 80px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -311,6 +310,9 @@ input {
 }
 
 #bottomMenu {
+  position: sticky;
+  left:0;
+  bottom: 0;
   background-color: #111;
   color: #eee;
   border-top: 1px solid #eee;
@@ -550,8 +552,6 @@ fieldset {
   height: 0;
 }
 
-
-
 #avatarUpdateButton {
   font-weight: normal;
   border-radius: 20px;
@@ -576,8 +576,6 @@ fieldset {
   outline: 2px solid #eee;
   border-radius: 10px;
 }
-
-
 
 @media (max-width: 600px) {
   #mainContainer {
@@ -665,6 +663,8 @@ fieldset {
     transition: all 0.2s;
   }
   .chatInput {
+    position: sticky;
+    bottom: 0;
     width: 100vw;
     z-index: 9999;
   }
