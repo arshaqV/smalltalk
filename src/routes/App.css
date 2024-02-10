@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@1&display=swap');
 body {
   overflow: hidden;
+  position: fixed;
+  height: 100%;
 }
 
 #root {
+  height: 100%;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -60,7 +63,7 @@ body {
   overflow-x: hidden;
   scrollbar-color: #eee rgba(0,0,0,0);
   scrollbar-width:none; /*change this maybe*/
-  height: calc(100vh - 140px);
+  height: calc(100% - 140px);
   border-collapse: collapse;
 }
 
@@ -101,6 +104,9 @@ body {
 
 #side {
   margin-top: 80px;
+  display: flex;
+    flex-direction: column;
+    justify-content: start;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -310,13 +316,13 @@ input {
 }
 
 #bottomMenu {
-  position: sticky;
+  position: absolute;
   left:0;
   bottom: 0;
   background-color: #111;
   color: #eee;
   border-top: 1px solid #eee;
-  border-right: 1px solid #eee;
+  box-sizing: border-box;
   display: flex;
   justify-content: space-around;
   z-index: 99;
@@ -328,6 +334,7 @@ input {
 }
 
 .bottomMenuButton {
+  box-sizing: border-box;
   border-right: 1px solid #eee;
   height: 60px;
   flex-grow: 1;
@@ -400,6 +407,7 @@ input {
 }
 
 #mainContainer {
+  min-height: 100%;
   display: flex;
   position: absolute;
   visibility: hidden;
@@ -409,9 +417,11 @@ input {
 
 .chatArea {
   left: 320px;
-  height: auto;
+  height: 100%;
+  max-height: 100%;
   width: auto;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .chatHeader {
@@ -453,10 +463,12 @@ input {
   background-color: #111;
   display: flex;
   flex-direction: column-reverse;
-  position: relative;
-  overflow-y: auto;
-  height: calc(100vh - 140px);
+  position: fixed;
+  height: calc(100% - 140px);
+  max-height: calc(100% - 140px);
   width: calc(100vw - 320px);
+  overflow-y: auto;
+  box-sizing: border-box;
   border-left: 1px solid #eee;
 }
 
@@ -492,10 +504,14 @@ input {
   border-top: #eee 1px solid;
   border-left: #eee 1px solid;
   padding: 0%;
-  position: relative;
-  top:60px;
+  position: absolute;
+  top:calc(100% - 60px);
   overflow-x: hidden;
   transition: all 0.2s;
+}
+
+#chatView {
+  display: contents;
 }
 
 #chatTextInput {
@@ -596,9 +612,13 @@ fieldset {
   }
 
   #side {
-    position: relative;
+    position: fixed;
+    height: calc(100% - 80px);
+    top:0px;
+    z-index: 100;
   }
   #chatList {
+    justify-self: flex-start;
     width: 100vw;
     position: relative;
   }
@@ -616,13 +636,14 @@ fieldset {
   #backButton {
     opacity: 100%;
     visibility: visible;
+    background-color: #28a55c;
     color: #111;
     height: 32px;
     width: 32px;
-    position: fixed;
-    top: 24px;
+    position: absolute;
+    top: -20px;
     left: 10px;
-    z-index: 999;
+    z-index: 125;
   }
 
   #indexPage {
@@ -637,10 +658,11 @@ fieldset {
 
   .chatArea {
     position: absolute;
+    max-height: 100%;
     width: calc(100vw + 1px);
     left: 100vw;
     top: 0;
-    z-index: 100;
+    z-index: 90;
     animation: slidein 0.3s ease-out alternate forwards;
   }
 

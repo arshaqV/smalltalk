@@ -47,7 +47,7 @@ const ChatList = () => {
                 logo.style.top = "20px"
                 logo.style.opacity = "100%"
                 header.style.top="0px"
-                inputBox.style.top="0px"
+                //inputBox.style.top="0px"
             },300)
         }
         navigate("/chat/"+id)
