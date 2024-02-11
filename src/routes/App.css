@@ -157,6 +157,10 @@ body {
   transition: background-color 0.1s;
 }
 
+.messageBox:last-child {
+  margin-bottom: 80px;
+}
+
 .messageBoxSelected {
   background-image: linear-gradient(to left, #eee 3%, rgba(0,0,0,0) 3%); 
 }
