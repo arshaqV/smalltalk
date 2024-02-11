@@ -51,15 +51,15 @@ const SettingsShade = ({user}) => {
                 return (
                 <label key={i}>
                 <input type="radio" name="color" value={i} onChange={(event)=>{setAvatarColor(event.target.value)}}></input>
-                <img style={{backgroundColor:avt,borderRadius:"50%"}}></img>
+                <div style={{backgroundColor:avt}}></div>
                 </label>)
                 })}
             </fieldset>
-            <fieldset>
+            <fieldset id="buttonFieldset">
                 <label>😎
-                <input type="checkbox" name="cool" onChange={(event)=>{setAvatarCool(event.target.checked ? "1": "0")}}></input>
+                <input type="checkbox" name="cool" checked={(avatarCool==1)} onChange={(event)=>{setAvatarCool(event.target.checked ? "1": "0")}}></input>
                 </label>
-            <button type="submit" id="avatarUpdateButton">Update</button>
+            <button type="submit" id="avatarUpdateButton">Update avatar</button>
             </fieldset>
             </form>    
             </div> );

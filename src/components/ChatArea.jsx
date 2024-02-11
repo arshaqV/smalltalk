@@ -21,6 +21,7 @@ const ChatArea = ({ chatid }) => {
     const userID = auth?.currentUser?.uid || ""
     const navigate = useNavigate()
     const [metadata, setMetadata] = useState({})
+    const [isTyping, setIsTyping] = useState(false)
     
     useEffect(()=>{
         if(userID=="")
@@ -36,16 +37,25 @@ const ChatArea = ({ chatid }) => {
             onValue(messagesRef, (snapshot) => {
                 if(snapshot.exists) {
                     messages.length = 0
+                    let prevMessageTime = 0
+                    let prevMessageFrom = ""
                     snapshot.forEach((childSnapshot) => {
                         if(childSnapshot.key=="lastMessage")
                             return
+                        const msgObj = childSnapshot.val()
+                        if(msgObj.time-prevMessageTime<60000 && msgObj.from===prevMessageFrom)
+                            msgObj.group = true
+                        else
+                            msgObj.group = false
+                        prevMessageTime = msgObj.time
+                        prevMessageFrom = msgObj.from
                         messages.push(
-                            childSnapshot.val()
+                            msgObj
                         )
                     })
                     messages.reverse()
                     setData([...messages])
-                    console.log(messages)
+                    console.log({messages})
                 }
             }) 
         } else {
@@ -56,6 +66,7 @@ const ChatArea = ({ chatid }) => {
         const text = document.getElementById("chatTextInput").value
         sendMessage(chatid,text)
         document.getElementById("chatTextInput").value = ""
+        setIsTyping(false)
     }
 
     const handleKeyPress = (event) => {
@@ -64,21 +75,43 @@ const ChatArea = ({ chatid }) => {
         }
       };
 
+      const handleText = (event) => {
+        const field = document.getElementById("chatTextInput")
+        if(field.value.length>0)
+            setIsTyping(true)
+        else
+            setIsTyping(false)
+      }
+
+      const buttonStyle = {color:"#333", cursor:"normal"}
+      if(isTyping) {
+        buttonStyle.color = "#eee"
+        buttonStyle.cursor = "pointer"
+      }
+      else {
+        buttonStyle.color = "#333"
+        buttonStyle.cursor = "normal"
+      }
+
+    let colors = ["#eeeeee","#04724d","#fa8334","#b6244f","#648de5"]
+    
     return ( <div className="chatArea">
         <div id="chatHeaderId" className="chatHeader">
             <ChatHeader metadata={metadata} avatarImages={avatarImages} cool={COOL}/>
         </div>
         <div className="chatMessages">
             {data.map((object, i)=>{
+                let className = "message"
                 if(object.from===userID)
-                return <div key={i} className="message messageSent">{object.text}</div>
-                else
-                return <div key={i} className="message">{object.text}</div>
+                    className+=" messageSent"
+                if(object.group==true)
+                    className+=" messageCluster"
+                return <div key={i} className={className}>{object.text}</div>
             })}
         </div>
         <div id="chatInputId" className="chatInput">
-           <input id="chatTextInput" type="text" placeholder="Type message here..." onKeyDown={handleKeyPress}></input>
-            <div id="sendButton" onClick={sendMessageAction}><IoSend id="sendButtonIcon"/></div>
+           <input id="chatTextInput" type="text" onChange={handleText} placeholder="Type message here..." onKeyDown={handleKeyPress}></input>
+            <div id="sendButton" style={buttonStyle} onClick={sendMessageAction}><IoSend id="sendButtonIcon"/></div>
         </div>
     </div> );
 }

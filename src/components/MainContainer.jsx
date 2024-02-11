@@ -8,7 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const MainContainer = () => {
     const [uid, setUid] = useOutletContext();
-    useEffect(onCreateAnimation)
+    useEffect(onCreateAnimation,[])
     return ( <div id="mainContainer">
         <div id="side">
     <ChatList />
@@ -30,7 +30,6 @@ const onCreateAnimation = function() {
         logo.style.position="absolute"
         logo.style.top="20px"
         logo.style.opacity="100%"
-        container.style.position="static"
         container.style.opacity = "100%"
         container.style.visibility ="visible"
     },500)

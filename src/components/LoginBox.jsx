@@ -77,6 +77,7 @@ const LoginBox = () => {
         setMode("Sign up")
       else
         setMode("Login")
+      setErrorMessage("")
     }
 
     return ( <div id="loginDiv">
@@ -86,7 +87,6 @@ const LoginBox = () => {
         <input type="password"  id="password" placeholder="Password"></input>
         <div id="errorMessage">{errorMessage}</div>
         <button className="buttonBox" id="loginButton" onClick={handleClick}>{mode}</button>
-        <br/>
         <div className="divider"></div>
         {(mode=="Login") ? <div>New here? <span id="signUp" onClick={switchMode}>Sign up.</span></div>
         : <div>Not new here? <span id="signUp" onClick={switchMode}>Login.</span></div>}

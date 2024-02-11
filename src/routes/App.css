@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@1&display=swap');
 body {
+  position: fixed;
   overflow: hidden;
   height: 100%;
   max-height: 100%;
@@ -7,7 +8,10 @@ body {
 }
 
 #root {
-  height: 100%;
+  position: relative;
+  min-height: 100%;
+  max-height: 100%;
+  min-width: 100%;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -20,6 +24,9 @@ body {
 }
 
 .loginClass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -30,27 +37,42 @@ body {
   width: 75px;
   margin: 10px;
   padding: 5px;
+  margin-bottom: 0px;
   font-size: small;
   border: 1px solid beige;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
+
 #splash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vh;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   background-color: #111;
   z-index: 1000;
 }
 
+#splashText {
+  font-family: 'Space Mono', monospace;
+  font-size: small; 
+  color: #333;
+}
+
 #smalltalk {
   font-family: 'Space Mono', monospace;
+  font-weight: bold;
+  color: #eee;
   font-size: x-large; 
   transition: all 0.2s;
   position: absolute;
   visibility: hidden;
+  z-index: 300;
   top: -80px;
   left: 50%;
   transform: translateX(-50%); /* Adjust for horizontal centering */
@@ -71,7 +93,8 @@ body {
   overflow-x: hidden;
   scrollbar-color: #eee rgba(0,0,0,0);
   scrollbar-width:none; /*change this maybe*/
-  height: calc(100% - 140px);
+  min-height: calc(100% - 60px);
+  max-height: calc(100% - 60px);
   border-collapse: collapse;
 }
 
@@ -175,7 +198,7 @@ body {
 
 .avatar {
   border-radius: 10px;
-  margin-right: 20px;
+  margin-right: 15px;
   margin-left: 5px;
   background-color: #eee;
   position: relative;
@@ -198,6 +221,14 @@ body {
   height: 40px;
   width: 40px;
   position: absolute;
+}
+
+.headerAvatar {
+  filter: drop-shadow(4px 4px 0 #222);
+}
+
+.headerAvatar .avatar {
+  border: solid 2px #222;
 }
 
 #settingsHeader {
@@ -230,12 +261,14 @@ body {
   margin-bottom: 0px;
   justify-self: end;
   flex-grow: 0;
-  margin-right: 10px;
+  margin-right: 12px;
   display: flex;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
 }
 
 #logOutButton:hover {
-  cursor: pointer;
+  color: #fd5050;
 }
 
 #settingsShade {
@@ -243,6 +276,7 @@ body {
   padding: 0;
   padding-left: 0;
   padding-right: 0;
+  border-right: 0px;
 }
 
 .loggedOutLogo {
@@ -254,12 +288,12 @@ body {
   text-decoration: underline;
   color: #eee;
   cursor: pointer;
+  color: #28a55c;
   transition: all 0.1s ease-out;
 }
 
 #signUp:hover {
   color: #28a55c;
-  transform: scale(1.1);
 }
 
 #headerLine {
@@ -291,7 +325,7 @@ body {
 #loginForm {
   border-radius: 10px;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 10px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -315,11 +349,19 @@ body {
 }
 
 input {
-  background-color: black;
+  background-color: #222;
   margin: 5px;
+  color : #eee;
   text-indent: 5px;
   border-radius: 5px;
-  font-family: 'Space Mono';
+  border: 0px;
+  font-family: 'Inter';
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+input:focus {
+  outline: solid #eee 3px;
 }
 
 #bottomMenu {
@@ -329,7 +371,7 @@ input {
   background-color: #111;
   color: #eee;
   border-top: 1px solid #eee;
-  box-sizing: border-box;
+  border-right: 1px solid #eee;
   display: flex;
   justify-content: space-around;
   z-index: 99;
@@ -378,19 +420,55 @@ input {
   justify-content: space-around;
   align-items: center;
   background-color: #111;
-  box-sizing: border-box;
   color: #eee;
-  z-index: 0;
+  z-index: 10000;
   padding-bottom: 10px;
   left: 0px;
-  width: 320px;
-  border-top: 5px solid #333;
-  box-shadow: 0px -10px 15px rgba(1, 1, 1, 0.5);
+  box-sizing: border-box;
+  width: 321px;
+  border-top: 3px solid #333;
+  border-bottom: #eee 1px solid;
+  box-shadow: 7px -7px 15px 0px rgba(0,0,0,0.5);
+}
+
+#addShade {
+  padding-top: 10px;
+  align-items: start;
+  text-indent: 5px;
+  padding-left: 10px;
+}
+
+#shadeOpen {
+  color:#155bff;
+}
+
+#addShade div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-indent: 10px;
+}
+
+#addShade input {
+  flex-grow: 1;
+}
+
+#addShade button {
+  outline: 1px solid #eee;
+  font-weight: normal;
+  border-radius: 20px;
+  border: 0px;
+  margin: 5px;
+  margin-right: 20px;
 }
 
 #avatarForm {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 #addUserButton {
   border-radius: 5px;
@@ -409,12 +487,14 @@ input {
   height: 1px;
   width: 200px;
   margin: 20px;
+  margin-bottom: 15px;
   border-radius: 10px;
   background-color: #eee;
 }
 
 #mainContainer {
   min-height: 100%;
+  height: 100%;
   display: flex;
   position: absolute;
   visibility: hidden;
@@ -436,7 +516,7 @@ input {
   width: calc(100vw - 320px);
   position: relative;
   top:80px;
-  overflow-x: hidden;
+  overflow: hidden;
   height: 80px;
   transition: all 0.2s;
 }
@@ -445,22 +525,16 @@ input {
   display: flex;
   padding-left: 20px;
   padding-right: 20px;
-  margin: 15px;
+  margin: 10px;
+  margin-top: 13px;
+  padding-bottom: 10px;
   justify-content: left;
   align-items: center;
 }
 
-.headerAvatar {
-  border-radius: 10px;
-  margin-right: 20px;
-  margin-left: 5px;
-  background-color:rgba(0,0,0,0);
-  color: #111;
-  height: 48px;
-  width: 48px;
-}
 
 .headerName {
+  padding-left: 5px;
   color: #111;
   font-size: large;
 }
@@ -476,27 +550,46 @@ input {
   overflow-y: auto;
   box-sizing: border-box;
   border-left: 1px solid #eee;
+  scrollbar-width: thin;
 }
 
 .message {
   max-width: 70%;
-  border: 1px solid #eee;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 12px;
   padding: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   border-radius: 10px;
   width: max-content;
   align-self: flex-start;
+  box-sizing: border-box;
+  border-top-left-radius: 0;
+  background-color: #333;
+  border: none;
 }
 
 .message:last-child {
   margin-top: 20px;
 }
 
+.message:first-child {
+  margin-bottom: 10px;
+}
+
 .messageSent {
   align-self: flex-end;
-  background-color: #282828;
+  background-color: #111;
+  border: solid 1px #555;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 0px;
+}
+
+.messageCluster {
+  border-radius: 10px;
+  margin-top: 3px;
+  border-bottom-right-radius: 10px;
 }
 
 .chatInput {
@@ -506,18 +599,17 @@ input {
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  box-sizing: border-box;
   border-top: #eee 1px solid;
   border-left: #eee 1px solid;
   padding: 0%;
   position: absolute;
-  top:calc(100% - 60px);
+  top:calc(100% - 61px);
   overflow-x: hidden;
   transition: all 0.2s;
 }
 
 #chatView {
-  display: contents;
+  height: 100%;
 }
 
 #chatTextInput {
@@ -532,6 +624,10 @@ input {
   text-indent: 10px;
 }
 
+#chatTextInput:focus {
+  outline: 0px;
+}
+
 #sendButton {
   margin: 10px;
   margin-left: 15px;
@@ -540,6 +636,7 @@ input {
   flex-grow: 1;
   justify-content: end;
   align-items: center;
+  color: #333;
 }
 
 #sendButtonIcon {
@@ -552,10 +649,11 @@ input {
   color: rgb(218, 67, 67);
 }
 
-#avatarForm {
-  display: flex;
-  flex-direction: column;
-}   
+#shadeError {
+  font-size: smaller;
+  color: rgb(218, 67, 67);
+  display: block;
+}
 
 fieldset {
   display: flex;
@@ -563,8 +661,19 @@ fieldset {
   align-items: center;
   padding-top: 10px;
   padding-bottom: 5px;
-  border-left: 0px;
-  border-right: 0px;
+  border: 0px;
+  border-bottom: 2px solid #333;
+
+}
+
+#buttonFieldset {
+  padding-bottom: 14px;
+  padding-left: 30px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0;
+
 }
 
 [type=radio] { 
@@ -575,6 +684,7 @@ fieldset {
 }
 
 #avatarUpdateButton {
+  outline: 1px solid #eee;
   font-weight: normal;
   border-radius: 20px;
   border: 0px;
@@ -587,16 +697,31 @@ fieldset {
   height: 48px;
   width: 48px;
   margin-left: 5px;
-  border: solid 3px #111;
+  border: solid 5px #111;
   box-sizing: border-box;
   border-radius: 10px;
   transition: all 0.05s ease-out;
 }
 
+[type=radio] + div {
+  cursor: pointer;
+  height : 48px;
+  width: 48px;
+  border-radius:50%;
+  border: solid 5px #111;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  transition: all 0.05s ease-out;
+}
+
 /* CHECKED STYLES */
-[type=radio]:checked + img {
+[type=radio]:checked + img,
+[type=radio]:checked + div {
   outline: 2px solid #eee;
-  border-radius: 10px;
+}
+
+label {
+  font-size: large;
 }
 
 @media (max-width: 600px) {
@@ -613,8 +738,7 @@ fieldset {
   }
 
   .messageBoxSelected {
-    color:#eee;
-    background-color: #111;
+    background-image: none;
   }
 
   #side {
@@ -636,6 +760,7 @@ fieldset {
   }
 
   #smalltalk {
+    z-index: 0;
     left:50% !important;
   }
 
@@ -658,6 +783,7 @@ fieldset {
     width: 100vw;
     z-index: 0;
     border-bottom: 1px solid #eee;
+    border-right: 0px;
   }
 
   .chatArea {
@@ -667,7 +793,7 @@ fieldset {
     left: 100vw;
     top: 0;
     animation: slidein 0.3s ease-out alternate forwards;
-    border-left: solid 1px #eee;
+    box-shadow: -10px -10px 15px rgba(1, 1, 1, 0.75);
   }
 
   @keyframes slidein {
@@ -688,6 +814,7 @@ fieldset {
     z-index: 9999;
     transition: all 0.2s;
     border-left: 0px;
+    scrollbar-width: none;
   }
   .chatInput {
     position: sticky;
@@ -698,6 +825,17 @@ fieldset {
   }
   .logoChatOpen {
     visibility: hidden;
+  }
+
+  .lastMessageText {
+    max-width: 70vw;
+  }
+  
+}
+
+@media (min-width: 1100px) {
+  .message {
+    max-width: 50%;
   }
   
 }

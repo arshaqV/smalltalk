@@ -102,7 +102,7 @@ export async function signUp(userID, userName) {
   })
 }
 
-export async function addUser(userName) {
+export function addUser(userName) {
   console.log(conversationsList)
   console.log(usersList)
   if (userName === "") {
@@ -115,8 +115,7 @@ export async function addUser(userName) {
       for (let i = 0; i < conversationsList.length; i++) {
         console.log(conversationsList[i])
         if (conversationsList[i].name === userName) {
-          console.log("Conversation with user already exists")
-          return
+          return "Conversation with user already exists."
         }
       }
       const conversationRef = ref(database, "conversation")
@@ -129,7 +128,7 @@ export async function addUser(userName) {
       })
       return
     }
-  console.log("User not found")
+  return "User not found"
 }
 
 export async function sendMessage(conversationID, messageText) {

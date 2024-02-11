@@ -19,7 +19,7 @@ function App() {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
           setUid(user.uid)
-          setOnSplash(false)
+          setTimeout(()=>{setOnSplash(false)},500)
           console.log("uid ", uid)
           const logo = document.getElementById("smalltalk")
           logo.style.visibility="visible"
@@ -37,7 +37,7 @@ function App() {
             },500)
         } else {
           // User is signed out
-          setOnSplash(false)
+          setTimeout(()=>{setOnSplash(false)},500)
           console.log("user is logged out")
           const logo = document.getElementById("smalltalk")
           const header = document.getElementById("headerLine")
