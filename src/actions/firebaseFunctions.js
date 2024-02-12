@@ -95,7 +95,7 @@ export async function signUp(userID, userName) {
 
 export function addUser(userName) {
   console.log(conversationsList)
-  console.log(usersList)
+  console.log({ usersList })
   if (userName === "") {
     console.log("Enter user name")
     return
@@ -103,6 +103,7 @@ export function addUser(userName) {
   const userID = auth.currentUser.uid
   for (const user in usersList)
     if (usersList[user].username === userName) {
+      if (userID === user) return "That's you."
       for (let i = 0; i < conversationsList.length; i++) {
         console.log(conversationsList[i])
         if (conversationsList[i].name === userName) {
