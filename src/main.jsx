@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './routes/root.jsx'
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
 import './index.css'
@@ -11,7 +11,8 @@ import ChatView from './routes/chat.jsx';
 import MainContainer from './components/MainContainer.jsx';
 import Index from './routes/index.jsx';
 
-const router = createBrowserRouter([
+
+const router = createHashRouter([
   {
     path: "/",
     element: <App />,
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
     ],
   }
-], {basename:"/smalltalk/",});
+], );
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
