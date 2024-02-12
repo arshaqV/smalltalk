@@ -862,6 +862,7 @@ label {
 
   .bottomMenuButton:hover {
     background-color: #111;
+    color: #eee;
   }
 
   .lastMessageText {
