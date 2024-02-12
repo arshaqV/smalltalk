@@ -9,12 +9,13 @@ import { auth } from "../firebaseConfig";
 import { getMetadata } from "../actions/firebaseFunctions";
 import CAT from "../assets/CAT.png"
 import PINGU from "../assets/PINGU.png"
+import ROB from "../assets/ROB.png"
 import COOL from "../assets/COOL.png"
 import KOALA from "../assets/KOALA.png"
 import PANDA from "../assets/PANDA.png"
 
 const colors = ["#eeeeee","#04724d","#fa8334","#b6244f","#648de5"]
-const avatarImages = [PINGU, CAT, KOALA, PANDA]
+const avatarImages = [PINGU, CAT, KOALA, PANDA, ROB]
 
 const ChatArea = ({ chatid }) => {
     const [data, setData] = useState([])

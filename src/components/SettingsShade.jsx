@@ -61,7 +61,7 @@ const SettingsShade = ({user}) => {
                 </label>
             <button type="submit" id="avatarUpdateButton">Update avatar</button>
             </fieldset>
-            </form>    
+            </form>  
             </div> );
 }
 

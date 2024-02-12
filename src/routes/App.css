@@ -79,6 +79,30 @@ body {
   transform: translateX(-50%); /* Adjust for horizontal centering */
 }
 
+.devText {
+  position: absolute;
+  font-family: 'Space Mono';
+  opacity: 0%;
+  color: #333;
+  bottom: 30px;
+  font-size: x-small;
+  animation: devtextin 0.5s ease-out 1.5s  forwards;
+}
+
+@keyframes devtextin {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+  
+}
+
+.devText a{ 
+  color: #28a55c;
+}
+
 #loginLogo {
   font-family: 'Space Mono', monospace;
   font-size: x-large; 
@@ -245,6 +269,7 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0;
+  border-top-right-radius: 30px;
 }
 
 #settingsAvatar {
@@ -277,11 +302,16 @@ body {
 }
 
 #settingsShade {
+  background-color: #222;
   margin: 0;
+  margin-left: 10px;
   padding: 0;
   padding-left: 0;
   padding-right: 0;
   border-right: 0px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .loggedOutLogo {
@@ -375,7 +405,6 @@ input:focus {
   bottom: 0;
   background-color: #111;
   color: #eee;
-  border-top: 1px solid #eee;
   border-right: 1px solid #eee;
   display: flex;
   justify-content: space-around;
@@ -390,6 +419,7 @@ input:focus {
 .bottomMenuButton {
   box-sizing: border-box;
   border-right: 1px solid #eee;
+  border-top: 1px solid #eee;
   height: 60px;
   flex-grow: 1;
   display: flex;
@@ -412,39 +442,56 @@ input:focus {
 }
 
 .bottomMenuButton:hover {
-  background-color: #eee;
-  color: #111;
+  background-color: #222;
   cursor: pointer;
 }
 
 .shade {
   position: absolute;
-  bottom: 60px;
+  bottom: 70px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   background-color: #111;
   color: #eee;
-  z-index: 10000;
+  z-index: 100;
   padding-bottom: 10px;
   left: 0px;
   box-sizing: border-box;
   width: 321px;
   border-top: 3px solid #333;
-  border-bottom: #eee 1px solid;
   box-shadow: 7px -7px 15px 0px rgba(0,0,0,0.5);
 }
 
 #addShade {
+  margin-left: 11px;
+  background-color: #222;
   padding-top: 10px;
   align-items: start;
   text-indent: 6px;
   padding-left: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.bottomMenuButton svg {
+  border-radius: 50%;
 }
 
 #shadeOpen {
-  color:#155bff;
+  border-right: solid 2px #222;
+  border-top: solid 1px #222;
+  background-color: #222;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transform: translate(11px,-10px);
+  z-index: 100;
+}
+#shadeOpen svg {
+  background-color: #eee;
+  color: #111;
 }
 
 #addShade div {
@@ -455,6 +502,7 @@ input:focus {
 }
 
 #addShade input {
+  background-color: #111;
   flex-grow: 1;
 }
 
@@ -634,7 +682,7 @@ height: 1.3em;
   border-left: #eee 1px solid;
   padding: 0%;
   position: absolute;
-  top:calc(100% - 61px);
+  top:calc(100% - 60px);
   overflow-x: hidden;
   transition: all 0.2s;
 }
@@ -682,25 +730,35 @@ height: 1.3em;
 
 #shadeError {
   font-size: smaller;
-  color: rgb(218, 67, 67);
+  color: rgb(255, 79, 79);
   display: block;
 }
 
 fieldset {
+  background-color: #111;
+  margin-left: 10px;
+  margin-right: 10px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding-top: 10px;
   padding-bottom: 5px;
   border: 0px;
-  border-bottom: 2px solid #333;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
 
+[type=checkbox] {
+  height: 18px;
+  width: 18px;
+  accent-color: #333;
 }
 
 #buttonFieldset {
   padding-bottom: 14px;
   padding-left: 30px;
   padding-right: 20px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   border-bottom: 0;
@@ -752,6 +810,7 @@ fieldset {
 }
 
 label {
+  -webkit-tap-highlight-color: transparent;
   font-size: large;
 }
 
@@ -766,6 +825,12 @@ label {
 
   #headerLine {
     min-width: 100vw;
+  }
+
+  #settingsShade {
+    border-right: 1px solid #222;
+    left: unset;
+    right: 10px;
   }
 
   .messageBoxSelected {
@@ -812,10 +877,15 @@ label {
   }
 
   .shade {
-    width: 100vw;
+    margin-right: 20px;
+    width: 80vw;
     z-index: 0;
-    border-bottom: 1px solid #eee;
     border-right: 0px;
+  }
+
+
+  .bottomMenuSettingsButton#shadeOpen  {
+    transform: translate(-9.5px,-10px) ;
   }
 
   .chatArea {
@@ -873,7 +943,7 @@ label {
 
 @media (min-width: 1100px) {
   .message {
-    max-width: 50%;
+    max-width: 40%;
   }
   
 }

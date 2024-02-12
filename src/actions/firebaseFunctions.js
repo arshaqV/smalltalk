@@ -88,8 +88,63 @@ export async function getConversations() {
 }
 
 export async function signUp(userID, userName) {
-  set(ref(database, "user/" + userID), {
-    username: userName,
+  try {
+    set(ref(database, "user/" + userID), {
+      username: userName,
+      avatar: "000",
+    })
+    const conversationRef = ref(database, "conversation")
+    const newConversationRef = push(conversationRef)
+    set(newConversationRef, {
+      users: {
+        [userID]: true,
+        rob: true,
+      },
+    })
+    const conversationID = newConversationRef._path.pieces_[1]
+    console.log(
+      "The new user message is at " + newConversationRef._path.pieces_[1]
+    )
+    const messagesRef = ref(database, "messages/" + conversationID)
+    const lastMessageRef = ref(
+      database,
+      "messages/" + conversationID + "/lastMessage/"
+    )
+    const newMessageRef = push(messagesRef)
+    set(newMessageRef, {
+      from: "rob",
+      text: "Hey there!",
+      time: serverTimestamp(database),
+    })
+    set(lastMessageRef, {
+      from: "rob",
+      text: "hey there!",
+      time: serverTimestamp(database),
+      seen: false,
+    })
+    const messages = [
+      "welcome to smalltalk.",
+      "my name is r0b, short for r0b3rt. i'm here to help you use this simple messaging app.",
+      'you can add new users to talk to by clicking the + button and typing in their username. type in "arshaq" and say hi!',
+      "(he built this btw)",
+      "hover (or tap) on a message and you can see the time it was sent. try it on this one!",
+      "you can also change you avatar in the settings menu. how about some shades?",
+      "if you find any bugs, do let arshaq know. bye!",
+      "*shutting down*",
+    ]
+    messages.forEach((message) => robMessage(message, conversationID))
+  } catch {
+    console.log("Something went wrong.")
+  }
+}
+
+async function robMessage(messageText, conversationID) {
+  const messagesRef = ref(database, "messages/" + conversationID)
+  const newMessageRef = push(messagesRef)
+  set(newMessageRef, {
+    from: "rob",
+    text: messageText,
+    time: serverTimestamp(database),
   })
 }
 

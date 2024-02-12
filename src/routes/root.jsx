@@ -66,6 +66,7 @@ function App() {
       <div id="headerLine"></div>
       {!loggedIn && <LoginBox />}
       <Outlet context={[uid, setUid]}/>
+      {!loggedIn && <div className="devText">developed by <a href="https://github.com/arshaqv">arshaq assoo.</a></div>}
     </>
   )
 }

@@ -15,7 +15,6 @@ const BottomMenu = ({uid}) => {
 
     const handleClickOutside = (event) => {
         if (menuRef.current && !menuRef.current.contains(event.target)) {
-
           closeShades();
         }
       };
@@ -99,7 +98,7 @@ const BottomMenu = ({uid}) => {
             <SettingsShade user={user}/>
         ) : null }
         <div className="bottomMenuButton" id={addOpen} onClick={toggleAddShade}><IoAddCircleOutline className="bottomMenuButtonIcon"/></div>
-        <div className="bottomMenuButton" id={settingsOpen} onClick={toggleSettingsShade}><IoIosSettings className="bottomMenuButtonIcon"/></div>
+        <div className="bottomMenuButton bottomMenuSettingsButton" id={settingsOpen} onClick={toggleSettingsShade}><IoIosSettings className="bottomMenuButtonIcon"/></div>
     </div> );
 }
  

@@ -14,6 +14,7 @@ import PINGU from "../assets/PINGU.png"
 import COOL from "../assets/COOL.png"
 import KOALA from "../assets/KOALA.png"
 import PANDA from "../assets/PANDA.png"
+import ROB from "../assets/ROB.png"
 
 const ChatList = () => {
     const [chatOpen, setChatOpen] = useState(false)
@@ -22,8 +23,8 @@ const ChatList = () => {
     const [conversations, setConversations] = useState([])
     const [lastMessages, setLastMessages] = useState({})
     const [sortedConversations, setSortedConversations] = useState([])
-    const avatarImages = [PINGU, CAT, KOALA, PANDA]
-    const currentPath = window.location.pathname;
+    const avatarImages = [PINGU, CAT, KOALA, PANDA, ROB]
+    const currentPath = window.location.hash;
 
     // Extract the last part of the path
     const chatID = currentPath.substring(currentPath.lastIndexOf('/') + 1);
@@ -141,7 +142,7 @@ const ChatList = () => {
         navigate("/chat")
     }
 
-    console.log(chatID)
+    console.log({chatID})
     console.log({lastMessages})
     return ( <div id="chatList">
         {chatOpen && <IoArrowBack id="backButton" onClick={back}/>}
