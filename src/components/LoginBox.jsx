@@ -15,7 +15,6 @@ const LoginBox = () => {
         button.innerText = "•••"
         const username = document.getElementById("username").value
         const email = username+"@noreply.smalltalk.io"
-        console.log(email)
         const password = document.getElementById("password").value
 
         if(mode!=="Login") 
@@ -35,7 +34,6 @@ const LoginBox = () => {
       })
       .catch((error) => {
         setErrorMessage("Something went wrong.")
-        console.log(error.code);
         console.log(error.message);
       }); 
   })
@@ -67,7 +65,6 @@ const LoginBox = () => {
         button.innerText = "Login"
         setErrorMessage("Invalid credentials.")
         console.log(error.code);
-        console.log(error.message);
       }); 
     
     }};

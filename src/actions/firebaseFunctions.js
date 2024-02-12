@@ -9,7 +9,6 @@ let conversationsList, usersList, loggedIn
 
 export function setUsersList(ul) {
   usersList = ul
-  console.log({ usersList })
 }
 
 export function setConversationsList(cl) {
@@ -19,11 +18,9 @@ export function setConversationsList(cl) {
 let userID
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log(user.uid)
     loggedIn = true
     userID = user.uid
   } else {
-    console.log("No user ID found inside getConversations()")
     loggedIn = false
   }
 })
@@ -34,23 +31,17 @@ export function getUserId() {
 
 export async function getConversations() {
   try {
-    console.log("Fetching conversations from Firebase RTDB")
     const [userSnapshot, conversationsSnapshot] = await Promise.all([
       get(child(dbRef, `user`)),
       get(child(dbRef, "conversation")),
     ])
 
-    console.log(conversationsSnapshot.val())
     if (userSnapshot.exists() && conversationsSnapshot.exists()) {
       usersList = userSnapshot.val()
       const conversations = []
       conversationsSnapshot.forEach((childSnapshot) => {
         const conversationId = childSnapshot.key
         const users = childSnapshot.child("users").val()
-        console.log("User ID inside if statement")
-        console.log(users)
-        console.log(userID)
-        console.log(users.userID)
         // Check if the userId is present in the users field
         if (users && users[userID]) {
           const participantIds = Object.keys(users)
@@ -75,10 +66,8 @@ export async function getConversations() {
         }
       })
       conversationsList = conversations
-      console.log(conversations)
       return conversations
     } else {
-      console.log("User or conversations data not available")
       return []
     }
   } catch (error) {
@@ -102,9 +91,7 @@ export async function signUp(userID, userName) {
       },
     })
     const conversationID = newConversationRef._path.pieces_[1]
-    console.log(
-      "The new user message is at " + newConversationRef._path.pieces_[1]
-    )
+
     const messagesRef = ref(database, "messages/" + conversationID)
     const lastMessageRef = ref(
       database,
@@ -149,10 +136,7 @@ async function robMessage(messageText, conversationID) {
 }
 
 export function addUser(userName) {
-  console.log(conversationsList)
-  console.log({ usersList })
   if (userName === "") {
-    console.log("Enter user name")
     return
   }
   const userID = auth.currentUser.uid
@@ -160,7 +144,6 @@ export function addUser(userName) {
     if (usersList[user].username === userName) {
       if (userID === user) return "That's you."
       for (let i = 0; i < conversationsList.length; i++) {
-        console.log(conversationsList[i])
         if (conversationsList[i].name === userName) {
           return "Conversation with user already exists."
         }
@@ -182,7 +165,6 @@ export async function sendMessage(conversationID, messageText) {
   if (!loggedIn) return
   const userID = auth.currentUser.uid
   if (messageText == "") {
-    console.log("Enter message")
     return
   }
   const messagesRef = ref(database, "messages/" + conversationID)
@@ -212,7 +194,6 @@ export async function setAvatar(code, uid) {
 }
 
 export function isCorrectUser(conversationID) {
-  console.log("inside isCorrectUser")
   for (let i = 0; i < conversationsList.length; i++) {
     if (conversationsList[i].id === conversationID) return true
   }

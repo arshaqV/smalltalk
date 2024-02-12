@@ -20,7 +20,6 @@ function App() {
           // https://firebase.google.com/docs/reference/js/firebase.User
           setUid(user.uid)
           setTimeout(()=>{setOnSplash(false)},500)
-          console.log("uid ", uid)
           const logo = document.getElementById("smalltalk")
           logo.style.visibility="visible"
           logo.style.left = "50%"
@@ -38,7 +37,7 @@ function App() {
         } else {
           // User is signed out
           setTimeout(()=>{setOnSplash(false)},500)
-          console.log("user is logged out")
+          console.log("User is logged out")
           const logo = document.getElementById("smalltalk")
           const header = document.getElementById("headerLine")
           

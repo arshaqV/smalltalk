@@ -29,7 +29,6 @@ const BottomMenu = ({uid}) => {
     useEffect(()=>{
         if(uid!=="")
         {const userRef = ref(database,"user/"+uid)
-        console.log({uid})
         onValue(userRef, (userSnapshot)=>{
             const userDetails = userSnapshot.val()
             const temp = {username: userDetails.username, avatar: userDetails.avatar, id: uid}
@@ -77,7 +76,6 @@ const BottomMenu = ({uid}) => {
         setError("")
         const username = document.getElementById("addUserText").value
         const err = addUser(username)
-        console.log({err})
         if(err!=undefined && err!=null)
             setError(err)
     }

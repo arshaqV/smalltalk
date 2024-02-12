@@ -43,10 +43,8 @@ const ChatArea = ({ chatid }) => {
             {navigate("/chat/")}
         else {
         if(isCorrectUser(chatid)) {
-            console.log("Rendering chat area")
             const md = getMetadata(chatid)
             setMetadata({...md})
-            console.log(metadata)
             const messagesRef = query(ref(database, 'messages/' + chatid), limitToLast(100));
             const messages = []
             onValue(messagesRef, (snapshot) => {
@@ -70,7 +68,6 @@ const ChatArea = ({ chatid }) => {
                     })
                     messages.reverse()
                     setData([...messages])
-                    console.log({messages})
                 }
             }) 
         } else {

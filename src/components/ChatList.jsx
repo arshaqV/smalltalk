@@ -63,7 +63,6 @@ const ChatList = () => {
 
     useEffect(()=>{
         const userID = uid
-        console.log("Rendering chat list")
         const conversationRef = ref(database,"conversation")
         const userRef = ref(database,"user")
         let userSnapshotCopy
@@ -77,10 +76,6 @@ const ChatList = () => {
             conversationsSnapshot.forEach((childSnapshot)=>{
                 const conversationId = childSnapshot.key;
                 const users = childSnapshot.child("users").val();
-                console.log("User ID inside if statement")
-                console.log(users)
-                console.log(userID)
-                console.log(users.userID)
                 // Check if the userId is present in the users field
                 if (users && users[userID]) {
                 const participantIds = Object.keys(users);
@@ -106,8 +101,6 @@ const ChatList = () => {
         conversations.forEach((conversation)=>{
             const messageRef = ref(database,"messages/"+conversation.id+"/lastMessage")
             onValue(messageRef,(obj)=>{
-                console.log("Here is the lastMessage of " + conversation.name)
-                console.log(obj.val())
                 const x = obj.val()
 
                 if(x!=null) {
@@ -122,7 +115,6 @@ const ChatList = () => {
         const sortedConversations = conversations.slice().sort((a, b) => {
             const lastMessageA = lastMessages[a.id];
             const lastMessageB = lastMessages[b.id];
-            console.log({lastMessageA})
             
             if (!lastMessageA || !lastMessageA.time) return 1;
             if (!lastMessageB || !lastMessageB.time) return -1;
@@ -130,7 +122,6 @@ const ChatList = () => {
             return lastMessageB.time - lastMessageA.time;
           });
       
-          console.log({sortedConversations})
           setSortedConversations(sortedConversations);
     },[conversations,lastMessages])
 
@@ -142,8 +133,6 @@ const ChatList = () => {
         navigate("/chat")
     }
 
-    console.log({chatID})
-    console.log({lastMessages})
     return ( <div id="chatList">
         {chatOpen && <IoArrowBack id="backButton" onClick={back}/>}
         {sortedConversations.map(function(object, i){
