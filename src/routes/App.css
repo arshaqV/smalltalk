@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@1&display=swap');
+
 body {
   position: fixed;
   overflow: hidden;
@@ -94,7 +95,7 @@ body {
   scrollbar-color: #eee rgba(0,0,0,0);
   scrollbar-width:none; /*change this maybe*/
   min-height: calc(100% - 60px);
-  max-height: calc(100% - 60px);
+  max-height: calc(100% - 140px);
   border-collapse: collapse;
 }
 
@@ -158,11 +159,11 @@ body {
 }
 
 .messageBox:last-child {
-  margin-bottom: 80px;
+  margin-bottom: 160px;
 }
 
 .messageBoxSelected {
-  background-image: linear-gradient(to left, #eee 3%, rgba(0,0,0,0) 3%); 
+  background-image: linear-gradient(to left, #eee 3%, rgba(22, 13, 13, 0) 3%); 
 }
 
 .messageBox:hover {
@@ -321,7 +322,7 @@ body {
     opacity: 0;
   }
   to {
-    width: 100vw;
+    width: 100%;
     opacity: 100%;
   }
 }
@@ -552,6 +553,7 @@ input:focus {
   max-height: calc(100% - 140px);
   width: calc(100vw - 320px);
   overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   border-left: 1px solid #eee;
   scrollbar-width: thin;
@@ -561,7 +563,7 @@ input:focus {
   max-width: 70%;
   margin-left: 8px;
   margin-right: 8px;
-  margin-top: 12px;
+  margin-top: 15px;
   padding: 10px;
   padding-top: 8px;
   padding-bottom: 8px;
@@ -569,7 +571,7 @@ input:focus {
   width: max-content;
   align-self: flex-start;
   box-sizing: border-box;
-  border-top-left-radius: 0;
+  border-top-left-radius: 2px;
   background-color: #333;
   border: none;
 }
@@ -587,7 +589,7 @@ input:focus {
   background-color: #111;
   border: solid 1px #555;
   border-top-left-radius: 10px;
-  border-top-right-radius: 0px;
+  border-top-right-radius: 2px;
 }
 
 .messageCluster {
@@ -595,6 +597,31 @@ input:focus {
   margin-top: 3px;
   border-bottom-right-radius: 10px;
 }
+
+.messageTime {
+  display: block;
+  color: #888;
+  font-size: small;
+  height: 1px;
+  width: 1px;
+  opacity: 0%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.4s ease-out 0.2s;
+}
+
+.message:hover .messageTime {
+  width: 11em;
+  opacity: 100%;
+height: 1.3em;
+}
+
+.messageSent .messageTime {
+  color: #555;
+}
+
+
 
 .chatInput {
   background-color: #111;
@@ -752,6 +779,7 @@ label {
   }
   #chatList {
     justify-self: flex-start;
+    max-height: calc(100%-140px);
     width: 100vw;
     z-index: 3;
   }
@@ -807,10 +835,11 @@ label {
   }
   .chatHeader {
     width: 100vw;
+    top:0px;
   }
 
   .chatHeaderContainer {
-    margin-left: 30px;
+    margin-left: 35px;
   }
   .chatMessages {
     width: 100vw;
@@ -829,6 +858,10 @@ label {
   }
   .logoChatOpen {
     visibility: hidden;
+  }
+
+  .bottomMenuButton:hover {
+    background-color: #111;
   }
 
   .lastMessageText {

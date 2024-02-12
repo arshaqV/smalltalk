@@ -1,12 +1,10 @@
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
-import { forwardRef, useEffect, useRef, useState } from "react";
-import { addUser, getUserId } from "../actions/firebaseFunctions";
+import { useEffect, useRef, useState } from "react";
+import { addUser } from "../actions/firebaseFunctions";
 import SettingsShade from "./SettingsShade";
 import { onValue, ref } from "firebase/database";
 import { database } from "../actions/firebaseFunctions";
-import { auth } from "../firebaseConfig";
-import { onAuthStateChanged } from "firebase/auth";
 
 const BottomMenu = ({uid}) => {
     const [isAddShadeOpen, setAddShade] = useState(false)

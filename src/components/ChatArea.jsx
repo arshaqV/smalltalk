@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { isCorrectUser, sendMessage } from "../actions/firebaseFunctions";
 import ChatHeader from "./ChatHeader";
 import { useEffect, useState } from "react";
 import { IoSend } from "react-icons/io5";
-import { query,ref,onValue,limitToLast, onDisconnect } from "firebase/database";
+import { query,ref,onValue,limitToLast } from "firebase/database";
 import { database } from "../actions/firebaseFunctions";
 import { auth } from "../firebaseConfig";
 import { getMetadata } from "../actions/firebaseFunctions";
@@ -23,6 +23,20 @@ const ChatArea = ({ chatid }) => {
     const [metadata, setMetadata] = useState({})
     const [isTyping, setIsTyping] = useState(false)
     
+
+    function formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        const day = ('0' + date.getDate()).slice(-2);
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Adding 1 because getMonth() returns zero-based month
+        const year = date.getFullYear();
+        const hours = date.getHours();
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const formattedHours = hours % 12 || 12;
+    
+        return `${day}/${month}/${year} ${formattedHours}:${minutes} ${ampm}`;
+    }
+
     useEffect(()=>{
         if(userID=="")
             {navigate("/chat/")}
@@ -75,7 +89,7 @@ const ChatArea = ({ chatid }) => {
         }
       };
 
-      const handleText = (event) => {
+    const handleText = (event) => {
         const field = document.getElementById("chatTextInput")
         if(field.value.length>0)
             setIsTyping(true)
@@ -106,7 +120,7 @@ const ChatArea = ({ chatid }) => {
                     className+=" messageSent"
                 if(object.group==true)
                     className+=" messageCluster"
-                return <div key={i} className={className}>{object.text}</div>
+                return <div key={i} className={className}>{object.text} <div className="messageTime">{formatTimestamp(object.time)}</div></div>
             })}
         </div>
         <div id="chatInputId" className="chatInput">

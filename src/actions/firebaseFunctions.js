@@ -1,16 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { app, auth } from "../firebaseConfig"
-import {
-  getDatabase,
-  ref,
-  child,
-  get,
-  set,
-  push,
-  query,
-} from "firebase/database"
+import { getDatabase, ref, child, get, set, push } from "firebase/database"
 import { serverTimestamp } from "firebase/database"
-import { onChildAdded, limitToLast, onValue } from "firebase/database"
 
 export const database = getDatabase(app)
 const dbRef = ref(database)
