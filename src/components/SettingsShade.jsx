@@ -16,11 +16,16 @@ const avatarImages = [PINGU, CAT, KOALA, PANDA]
 const SettingsShade = ({user}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
+        const button = document.getElementById("avatarUpdateButton")
+        button.innerText = "• • •"
         const x = avatarImages.indexOf(avatarImage)
         let newCode = ""
         newCode += x + avatarColor + avatarCool
         console.log({newCode})
+        setTimeout(()=>button.innerText="Updated!",1000)
+        setTimeout(()=>button.innerText="Update avatar",3500)
         setAvatar(newCode,user.id)
+        
     }
 
     const [avatarImage,setAvatarImage] = useState(avatarImages[user.avatar[0]])

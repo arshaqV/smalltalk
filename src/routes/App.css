@@ -83,7 +83,7 @@ body {
   position: absolute;
   font-family: 'Space Mono';
   opacity: 0%;
-  color: #333;
+  color: #555;
   bottom: 30px;
   font-size: x-small;
   animation: devtextin 0.5s ease-out 1.5s  forwards;
@@ -159,6 +159,7 @@ body {
 }
 
 #side {
+  background-color: #111;
   margin-top: 80px;
   display: flex;
     flex-direction: column;
@@ -175,7 +176,7 @@ body {
   align-items: center;
   height:70px;
   width:300px;
-  border: 1px solid #eee;
+  border: 1px dashed #666;
   border-right: 0px;
   border-top: 0px;
   border-left: 0px;
@@ -187,7 +188,8 @@ body {
 }
 
 .messageBoxSelected {
-  background-image: linear-gradient(to left, #eee 3%, rgba(22, 13, 13, 0) 3%); 
+  background-color: #222;
+  background-image: linear-gradient(to left, #444 5%, rgba(22, 13, 13, 0) 3%); 
 }
 
 .messageBox:hover {
@@ -448,7 +450,7 @@ input:focus {
 
 .shade {
   position: absolute;
-  bottom: 70px;
+  bottom: 74px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -486,7 +488,7 @@ input:focus {
   background-color: #222;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  transform: translate(11px,-10px);
+  transform: translate(11px,-15px);
   z-index: 100;
 }
 #shadeOpen svg {
@@ -609,8 +611,8 @@ input:focus {
 
 .message {
   max-width: 70%;
-  margin-left: 8px;
-  margin-right: 8px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 15px;
   padding: 10px;
   padding-top: 8px;
@@ -751,7 +753,6 @@ fieldset {
 [type=checkbox] {
   height: 18px;
   width: 18px;
-  accent-color: #333;
 }
 
 #buttonFieldset {
@@ -773,6 +774,7 @@ fieldset {
 }
 
 #avatarUpdateButton {
+  width: 146px;
   outline: 1px solid #eee;
   font-weight: normal;
   border-radius: 20px;
@@ -809,9 +811,18 @@ fieldset {
   outline: 2px solid #eee;
 }
 
+#Go {
+  padding-bottom: 10px;
+}
+
+#shadeOpen + div {
+  border-left: solid 1px #eee;
+}
+
 label {
   -webkit-tap-highlight-color: transparent;
   font-size: large;
+  display: flex;
 }
 
 @media (max-width: 600px) {
@@ -885,7 +896,7 @@ label {
 
 
   .bottomMenuSettingsButton#shadeOpen  {
-    transform: translate(-9.5px,-10px) ;
+    transform: translate(-9.5px,-15px) ;
   }
 
   .chatArea {
