@@ -26,7 +26,7 @@ const LastMessage = ({ lastMessage, userid }) => {
             // Create a string based on the time difference
             let timeString;
             if (weeksDifference > 0) {
-            timeString = weeksDifference === 1 ? "1w" : `${weeksDifference}d`;
+            timeString = weeksDifference === 1 ? "1w" : `${weeksDifference}w`;
             } else if (daysDifference > 0) {
             timeString = daysDifference === 1 ? "1d" : `${daysDifference}d`;
             } else if (hoursDifference > 0) {
